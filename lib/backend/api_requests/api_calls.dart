@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -54,9 +53,6 @@ class ApiPagingParams {
 }
 
 String _toEncodable(dynamic item) {
-  if (item is DocumentReference) {
-    return item.path;
-  }
   return item;
 }
 

@@ -1,4 +1,4 @@
-import '/auth/firebase_auth/auth_util.dart';
+import '/auth/supabase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_language_selector.dart';
 import '/flutter_flow/flutter_flow_theme.dart';

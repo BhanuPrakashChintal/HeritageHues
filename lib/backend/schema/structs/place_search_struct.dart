@@ -1,25 +1,20 @@
 // ignore_for_file: unnecessary_getters_setters
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
-class PlaceSearchStruct extends FFFirebaseStruct {
+class PlaceSearchStruct extends BaseStruct {
   PlaceSearchStruct({
     int? id,
     List<String>? name,
     List<String>? location,
     List<int>? rating,
-    FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _name = name,
         _location = location,
-        _rating = rating,
-        super(firestoreUtilData);
+        _rating = rating;
 
   // "id" field.
   int? _id;
@@ -148,79 +143,7 @@ class PlaceSearchStruct extends FFFirebaseStruct {
 
 PlaceSearchStruct createPlaceSearchStruct({
   int? id,
-  Map<String, dynamic> fieldValues = const {},
-  bool clearUnsetFields = true,
-  bool create = false,
-  bool delete = false,
 }) =>
     PlaceSearchStruct(
       id: id,
-      firestoreUtilData: FirestoreUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
     );
-
-PlaceSearchStruct? updatePlaceSearchStruct(
-  PlaceSearchStruct? placeSearch, {
-  bool clearUnsetFields = true,
-  bool create = false,
-}) =>
-    placeSearch
-      ?..firestoreUtilData = FirestoreUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
-
-void addPlaceSearchStructData(
-  Map<String, dynamic> firestoreData,
-  PlaceSearchStruct? placeSearch,
-  String fieldName, [
-  bool forFieldValue = false,
-]) {
-  firestoreData.remove(fieldName);
-  if (placeSearch == null) {
-    return;
-  }
-  if (placeSearch.firestoreUtilData.delete) {
-    firestoreData[fieldName] = FieldValue.delete();
-    return;
-  }
-  final clearFields =
-      !forFieldValue && placeSearch.firestoreUtilData.clearUnsetFields;
-  if (clearFields) {
-    firestoreData[fieldName] = <String, dynamic>{};
-  }
-  final placeSearchData =
-      getPlaceSearchFirestoreData(placeSearch, forFieldValue);
-  final nestedData =
-      placeSearchData.map((k, v) => MapEntry('$fieldName.$k', v));
-
-  final mergeFields = placeSearch.firestoreUtilData.create || clearFields;
-  firestoreData
-      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
-}
-
-Map<String, dynamic> getPlaceSearchFirestoreData(
-  PlaceSearchStruct? placeSearch, [
-  bool forFieldValue = false,
-]) {
-  if (placeSearch == null) {
-    return {};
-  }
-  final firestoreData = mapToFirestore(placeSearch.toMap());
-
-  // Add any Firestore field values
-  placeSearch.firestoreUtilData.fieldValues
-      .forEach((k, v) => firestoreData[k] = v);
-
-  return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;
-}
-
-List<Map<String, dynamic>> getPlaceSearchListFirestoreData(
-  List<PlaceSearchStruct>? placeSearchs,
-) =>
-    placeSearchs?.map((e) => getPlaceSearchFirestoreData(e, true)).toList() ??
-    [];

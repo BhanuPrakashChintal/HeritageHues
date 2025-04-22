@@ -1,25 +1,22 @@
 // ignore_for_file: unnecessary_getters_setters
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '/backend/schema/util/schema_util.dart';
 
-import '/backend/schema/util/firestore_util.dart';
-
+import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
-class PlacesStruct extends FFFirebaseStruct {
+class PlacesStruct extends BaseStruct {
   PlacesStruct({
     int? index,
     String? name,
     String? location,
     int? rating,
     String? image,
-    FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _index = index,
         _name = name,
         _location = location,
         _rating = rating,
-        _image = image,
-        super(firestoreUtilData);
+        _image = image;
 
   // "index" field.
   int? _index;
@@ -156,10 +153,6 @@ PlacesStruct createPlacesStruct({
   String? location,
   int? rating,
   String? image,
-  Map<String, dynamic> fieldValues = const {},
-  bool clearUnsetFields = true,
-  bool create = false,
-  bool delete = false,
 }) =>
     PlacesStruct(
       index: index,
@@ -167,68 +160,4 @@ PlacesStruct createPlacesStruct({
       location: location,
       rating: rating,
       image: image,
-      firestoreUtilData: FirestoreUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-        delete: delete,
-        fieldValues: fieldValues,
-      ),
     );
-
-PlacesStruct? updatePlacesStruct(
-  PlacesStruct? places, {
-  bool clearUnsetFields = true,
-  bool create = false,
-}) =>
-    places
-      ?..firestoreUtilData = FirestoreUtilData(
-        clearUnsetFields: clearUnsetFields,
-        create: create,
-      );
-
-void addPlacesStructData(
-  Map<String, dynamic> firestoreData,
-  PlacesStruct? places,
-  String fieldName, [
-  bool forFieldValue = false,
-]) {
-  firestoreData.remove(fieldName);
-  if (places == null) {
-    return;
-  }
-  if (places.firestoreUtilData.delete) {
-    firestoreData[fieldName] = FieldValue.delete();
-    return;
-  }
-  final clearFields =
-      !forFieldValue && places.firestoreUtilData.clearUnsetFields;
-  if (clearFields) {
-    firestoreData[fieldName] = <String, dynamic>{};
-  }
-  final placesData = getPlacesFirestoreData(places, forFieldValue);
-  final nestedData = placesData.map((k, v) => MapEntry('$fieldName.$k', v));
-
-  final mergeFields = places.firestoreUtilData.create || clearFields;
-  firestoreData
-      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
-}
-
-Map<String, dynamic> getPlacesFirestoreData(
-  PlacesStruct? places, [
-  bool forFieldValue = false,
-]) {
-  if (places == null) {
-    return {};
-  }
-  final firestoreData = mapToFirestore(places.toMap());
-
-  // Add any Firestore field values
-  places.firestoreUtilData.fieldValues.forEach((k, v) => firestoreData[k] = v);
-
-  return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;
-}
-
-List<Map<String, dynamic>> getPlacesListFirestoreData(
-  List<PlacesStruct>? placess,
-) =>
-    placess?.map((e) => getPlacesFirestoreData(e, true)).toList() ?? [];
